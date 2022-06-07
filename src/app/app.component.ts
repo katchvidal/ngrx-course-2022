@@ -5,7 +5,7 @@ import { map, tap } from 'rxjs/operators';
 import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
 import { AppState } from './reducers';
 import { isLoggedIn, isLogOut } from './auth/selector';
-import { LOGOUT } from './auth/auth.actions';
+import { LOGIN, LOGOUT } from './auth/auth.actions';
 
 
 
@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
 
   isLoggedIn$: Observable<boolean>;  //  Observable esta logueado?¿
   isLogOut$: Observable<boolean>;  //  Observable esta logueado?¿
-
+  userProfile = localStorage.getItem('user')
   constructor(
     private router: Router,
     private store: Store<AppState>
@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.store.dispatch(LOGIN({ user: JSON.parse(this.userProfile)})) //  Si el Usuario recargo / cerro el navegador podemos rescatar su inicio de session
     this.router.events.subscribe(event => {
       switch (true) {
         case event instanceof NavigationStart: {
@@ -56,7 +56,7 @@ export class AppComponent implements OnInit {
     this.isLogOut$ = this.store
       .pipe(
         select( isLogOut ),
-        tap(() => this.router.navigate(['/login']))
+        // tap(() => this.router.navigate(['/login']))
       )
   }
 

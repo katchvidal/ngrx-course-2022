@@ -40,3 +40,9 @@
         select( isLoggedIn )
     )
 ```
+
+##  NGRX EFFECTS
+```
+    - Los effectos en NGRX nos ayudan a poder hacer funcionalidades mas complejas
+    - command: $ ng add @ngrx/effects@latest
+```
