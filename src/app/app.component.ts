@@ -4,7 +4,7 @@ import { Observable } from "rxjs";
 import { map, tap } from 'rxjs/operators';
 import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
 import { AppState } from './reducers';
-import { isLoggedIn, isLogOut } from './auth/selector';
+import { isLoggedIn, isLogOut } from './auth/auth.selector';
 import { LOGIN, LOGOUT } from './auth/auth.actions';
 
 
