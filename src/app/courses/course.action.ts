@@ -1,3 +1,4 @@
+import { Update } from "@ngrx/entity";
 import { createAction, props } from "@ngrx/store";
 import { Course } from "./model/course";
 
@@ -13,7 +14,12 @@ export const ALLCOURSESLOADED = createAction(
     props<{ courses: Course[] }>()
 )
 
-export const ALLCOURSESFIALED = createAction(
-    '[LOAD COURSES FAILED EFFECT] ALL COURSES LOADED FAILED',
-    props<{ payload: any }>()
+// export const ALLCOURSESFIALED = createAction(
+//     '[LOAD COURSES FAILED EFFECT] ALL COURSES LOADED FAILED',
+//     props<{ payload: any }>()
+// )
+
+export const COURSESUPDATE = createAction(
+    '[UPDATE COURSES DIALOG] UPDATE COURSE',
+    props<{ update: Update<Course> }>()
 )

@@ -4,6 +4,10 @@ import {Course} from '../model/course';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {CoursesHttpService} from '../services/courses-http.service';
+import { Update } from '@ngrx/entity';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../reducers';
+import { COURSESUPDATE } from '../course.action';
 
 @Component({
   selector: 'course-dialog',
@@ -23,9 +27,10 @@ export class EditCourseDialogComponent {
   loading$:Observable<boolean>;
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) data,
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<EditCourseDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) data,
+    private store: Store<AppState>,
     private coursesService: CoursesHttpService) {
 
     this.dialogTitle = data.dialogTitle;
@@ -58,16 +63,28 @@ export class EditCourseDialogComponent {
 
   onSave() {
 
+    //  Manejador del Formulario
     const course: Course = {
       ...this.course,
       ...this.form.value
     };
 
-    this.coursesService.saveCourse(course.id, course)
-      .subscribe(
-        () => this.dialogRef.close()
-      )
+    // this.coursesService.saveCourse(course.id, course)
+    //   .subscribe(
+    //     () => this.dialogRef.close()
+    //   )
 
+    //  Objeto Actualizado 
+    const update : Update<Course> = {
+      id: course.id,
+      changes: course
+    }
+
+    //  Despachando la Accion
+    this.store.dispatch( COURSESUPDATE({ update }));
+
+    //  Cerrar el Formulario
+    this.dialogRef.close()
 
   }
 

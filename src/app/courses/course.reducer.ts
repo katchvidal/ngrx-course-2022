@@ -5,7 +5,7 @@ import { compareCourses, Course } from "./model/course";
 
 
 export interface CourseState extends EntityState<Course> {
-
+    allCoursesLoaded: boolean
 }
 // export interface CourseState {
 //     entities: {[ key: number ] : Course }
@@ -18,11 +18,14 @@ export const adpater = createEntityAdapter<Course>(
         selectId: course => course.id
     }
 );
-export const initiaCourseState = adpater.getInitialState();
+export const initiaCourseState = adpater.getInitialState({
+    allCoursesLoaded: false
+});
 
 export const courseReducer = createReducer(
     initiaCourseState,
-    on(CourseActions.ALLCOURSESLOADED, (state, action) => adpater.addMany(action.courses, state))
+    on(CourseActions.ALLCOURSESLOADED, (state, action) => adpater.addMany(action.courses, {...state, allCoursesLoaded: true })),
+    on(CourseActions.COURSESUPDATE, ( state, action) => adpater.updateOne( action.update, state ))
 )
 
 export const {
