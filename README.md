@@ -46,3 +46,7 @@
     - Los effectos en NGRX nos ayudan a poder hacer funcionalidades mas complejas
     - command: $ ng add @ngrx/effects@latest
 ```
+
+##  NGRX DATA ENTITY IN LAZY LOAD
+
+- Add EntityDataModule in AppModule ( general Module App )
